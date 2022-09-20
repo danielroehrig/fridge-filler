@@ -33,8 +33,8 @@ isar_version: &isar_version 3.0.0 # define the version to be used
 dependencies:
   flutter:
     sdk: flutter
-  isar: *isar_version
-  isar_flutter_libs: *isar_version # contains Isar Core
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,14 +44,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  isar_generator: *isar_version
-  build_runner: any
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+  hive_generator: ^1.1.3
+  build_runner: ^2.2.1
   flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
