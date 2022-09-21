@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:multi_shop_list/pages/home_page.dart';
+import 'package:multi_shop_list/provider/database_provider.dart';
 
 void main() {
-  runApp(const MultiShopListApp());
+  runApp(const DatabaseProvider(child: MultiShopListApp()));
 }
 
 class MultiShopListApp extends StatelessWidget {
