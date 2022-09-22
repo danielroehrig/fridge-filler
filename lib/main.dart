@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:multi_shop_list/pages/home_page.dart';
 import 'package:multi_shop_list/provider/database_provider.dart';
 
-void main() {
-  runApp(const DatabaseProvider(child: MultiShopListApp()));
+void main() async {
+  await Hive.initFlutter();
+  runApp(DatabaseProvider(child: const MultiShopListApp()));
 }
 
 class MultiShopListApp extends StatelessWidget {
   const MultiShopListApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

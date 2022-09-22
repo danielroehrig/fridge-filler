@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_shop_list/provider/database_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -8,14 +9,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  DatabaseProvider? _databaseProvider;
   @override
   Widget build(BuildContext context) {
+    _databaseProvider = DatabaseProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Multi Shop List"),
@@ -27,18 +24,45 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text("Multi Shop List", style: TextStyle(color: Colors.black)),
-          Container(
-            color: Colors.green,
-          ),
+          Expanded(child: _getLists()),
         ],
       ),
+    );
+  }
+
+  Widget _getLists() {
+    return FutureBuilder<List<String>>(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasError) {
+            return const Text('Error');
+          } else if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(snapshot.data![index]),
+                  );
+                });
+          } else {
+            return const Text('Empty data');
+          }
+        } else {
+          return Text('State: ${snapshot.connectionState}');
+        }
+      },
+      future: _databaseProvider!.getLists(),
     );
   }
 
   FloatingActionButton _addListButton() {
     return FloatingActionButton(
       child: const Icon(Icons.add),
-      onPressed: () {},
+      onPressed: () {
+        _databaseProvider!.addList("test list").then((v) => setState(() {}));
+      },
     );
   }
 }
