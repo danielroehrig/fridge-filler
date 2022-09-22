@@ -61,8 +61,29 @@ class _HomePageState extends State<HomePage> {
     return FloatingActionButton(
       child: const Icon(Icons.add),
       onPressed: () {
-        _databaseProvider!.addList("test list").then((v) => setState(() {}));
+        _showCreateListDialog();
       },
     );
+  }
+
+  void _showCreateListDialog() {
+    showDialog(
+        context: context,
+        builder: (BuildContext buildContext) {
+          return AlertDialog(
+            icon: Icon(Icons.list),
+            title: Text('Add new list'),
+            content: TextField(
+              onSubmitted: (listName) {
+                if (listName != "") {
+                  _databaseProvider!
+                      .addList(listName)
+                      .then((v) => setState(() {}));
+                }
+                Navigator.pop(buildContext);
+              },
+            ),
+          );
+        });
   }
 }
