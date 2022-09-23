@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_shop_list/models/list_model.dart';
 import 'package:multi_shop_list/provider/database_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,10 +32,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getLists() {
-    return FutureBuilder<List<String>>(
+    return FutureBuilder<List<ListEntry>>(
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
             return const Text('Error');
@@ -43,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(snapshot.data![index]),
+                    title: Text(snapshot.data![index].name),
                   );
                 });
           } else {
@@ -71,8 +72,8 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (BuildContext buildContext) {
           return AlertDialog(
-            icon: Icon(Icons.list),
-            title: Text('Add new list'),
+            icon: const Icon(Icons.list),
+            title: const Text('Add new list'),
             content: TextField(
               onSubmitted: (listName) {
                 if (listName != "") {

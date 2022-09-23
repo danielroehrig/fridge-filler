@@ -1,31 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:multi_shop_list/models/list_model.dart';
 
 class DatabaseProvider extends InheritedWidget {
   DatabaseProvider({required super.child}) : super();
-  final Future<Box<dynamic>> _box = Hive.openBox('box');
+  final Future<Box<ListEntry>> _box = Hive.openBox<ListEntry>('box');
 
   static DatabaseProvider? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<DatabaseProvider>();
 
   Future<void> addList(String listName) {
     return _box.then((box) {
-      var listBox = box.get('name');
-      if (listBox is! List<String>) {
-        listBox = <String>[];
-      }
-      listBox.add(listName);
-      box.put('name', listBox);
+      box.add(ListEntry(name: listName));
     });
   }
 
-  Future<List<String>> getLists() {
+  Future<List<ListEntry>> getLists() {
     return _box.then((box) {
-      var listBox = box.get('name');
-      if (listBox is! List<String>) {
-        listBox = <String>[];
-      }
-      return listBox;
+      return box.values.toList();
     });
   }
 

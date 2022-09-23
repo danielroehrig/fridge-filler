@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:multi_shop_list/models/list_model.dart';
 import 'package:multi_shop_list/pages/home_page.dart';
 import 'package:multi_shop_list/provider/database_provider.dart';
 
 void main() async {
-  await Hive.initFlutter();
+  await Hive.initFlutter('hive_boxes');
+  Hive.registerAdapter(ListEntryAdapter());
   runApp(DatabaseProvider(child: const MultiShopListApp()));
 }
 
