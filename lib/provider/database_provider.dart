@@ -11,7 +11,14 @@ class DatabaseProvider extends InheritedWidget {
 
   Future<void> addList(String listName) {
     return _box.then((box) {
-      box.add(ListEntry(name: listName));
+      ListEntry listEntry = ListEntry(name: listName);
+      box.put(listEntry.id.toString(), listEntry);
+    });
+  }
+
+  Future<void> deleteList(String listId) {
+    return _box.then((box) {
+      box.delete(listId);
     });
   }
 

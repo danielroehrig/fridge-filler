@@ -24,7 +24,6 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Multi Shop List", style: TextStyle(color: Colors.black)),
           Expanded(child: _getLists()),
         ],
       ),
@@ -43,8 +42,52 @@ class _HomePageState extends State<HomePage> {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(snapshot.data![index].name),
+                  return Dismissible(
+                    key: Key(snapshot.data![index].id),
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      child: const Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                      ),
+                    ),
+                    direction: DismissDirection.endToStart,
+                    confirmDismiss: (DismissDirection direction) async {
+                      return await showDialog(
+                          context: context,
+                          builder: (buildContext) {
+                            return AlertDialog(
+                              title: const Text("Confirm"),
+                              content: const Text(
+                                  "Do you really want to delete the whole list?"),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(buildContext, false);
+                                  },
+                                  child: const Text("CANCEL"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    _databaseProvider!
+                                        .deleteList(snapshot.data![index].id);
+                                    setState(() {});
+                                    Navigator.pop(buildContext, true);
+                                  },
+                                  style: TextButton.styleFrom(
+                                    backgroundColor: Colors.red,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                  child: const Text("DELETE"),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: ListTile(
+                      title: Text(snapshot.data![index].name),
+                    ),
                   );
                 });
           } else {

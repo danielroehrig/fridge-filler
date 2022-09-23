@@ -1,5 +1,5 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:uuid/uuid.dart';
 
 part 'list_model.g.dart';
 
@@ -13,8 +13,7 @@ class ListEntry {
   late List<ItemEntry> entries;
 
   ListEntry({required this.name}) {
-    var uuid = const Uuid();
-    id = uuid.v4();
+    id = UniqueKey().toString();
     entries = <ItemEntry>[];
   }
 }
