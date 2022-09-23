@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:multi_shop_list/models/list_model.dart';
+import 'package:multi_shop_list/pages/list_page.dart';
 import 'package:multi_shop_list/provider/database_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -57,8 +58,9 @@ class _HomePageState extends State<HomePage> {
 
   Dismissible _listEntryItem(AsyncSnapshot<List<ListEntry>> snapshot, int index,
       BuildContext context) {
+    ListEntry listEntry = snapshot.data![index];
     return Dismissible(
-      key: Key(snapshot.data![index].id),
+      key: Key(listEntry.id),
       background: Container(
         color: Colors.red,
         alignment: Alignment.centerRight,
@@ -69,14 +71,24 @@ class _HomePageState extends State<HomePage> {
       ),
       direction: DismissDirection.endToStart,
       confirmDismiss: (DismissDirection direction) {
-        return showDialog(
+        return showDialog<bool>(
             context: context,
             builder: (buildContext) {
               return _deleteConfirmDialog(buildContext, snapshot, index);
             });
       },
       child: ListTile(
-        title: Text(snapshot.data![index].name),
+        title: Text(listEntry.name),
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (context) => ListPage(
+                      key: Key(listEntry.id),
+                      listId: listEntry.id.toString(),
+                    )),
+          );
+          print("I was clicked man");
+        },
       ),
     );
   }
