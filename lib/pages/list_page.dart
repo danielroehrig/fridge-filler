@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:multi_shop_list/models/list_model.dart';
 
 class ListPage extends StatefulWidget {
-  String listId;
-  ListPage({Key? key, required String this.listId}) : super(key: key);
+  late ListEntry _listEntry;
+  ListPage({Key? key, required ListEntry listEntry}) : super(key: key) {
+    _listEntry = listEntry;
+  }
 
   @override
   State<ListPage> createState() => _ListPageState();
@@ -11,6 +14,8 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(title: Text(widget._listEntry.name)),
+    );
   }
 }

@@ -84,10 +84,9 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(
                 builder: (context) => ListPage(
                       key: Key(listEntry.id),
-                      listId: listEntry.id.toString(),
+                      listEntry: listEntry,
                     )),
           );
-          print("I was clicked man");
         },
       ),
     );
