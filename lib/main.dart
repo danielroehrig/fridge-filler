@@ -7,6 +7,7 @@ import 'package:multi_shop_list/provider/database_provider.dart';
 void main() async {
   await Hive.initFlutter('hive_boxes');
   Hive.registerAdapter(ListEntryAdapter());
+  Hive.registerAdapter(ItemEntryAdapter());
   runApp(DatabaseProvider(child: const MultiShopListApp()));
 }
 

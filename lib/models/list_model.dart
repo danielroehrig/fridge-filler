@@ -4,7 +4,7 @@ import 'package:hive/hive.dart';
 part 'list_model.g.dart';
 
 @HiveType(typeId: 1)
-class ListEntry {
+class ListEntry extends HiveObject {
   @HiveField(0)
   late String id;
   @HiveField(1)
@@ -19,7 +19,7 @@ class ListEntry {
 }
 
 @HiveType(typeId: 2)
-class ItemEntry {
+class ItemEntry extends HiveObject {
   @HiveField(0)
   String name;
   @HiveField(1)
