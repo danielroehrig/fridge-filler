@@ -17,12 +17,24 @@ class _ListPageState extends State<ListPage> {
     _listEntry = widget.listEntry;
     return Scaffold(
       appBar: AppBar(title: Text(_listEntry.name)),
+      body: _showEntries(),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
           _addItem();
         },
       ),
+    );
+  }
+
+  Widget _showEntries() {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(_listEntry.entries[index].name),
+        );
+      },
+      itemCount: _listEntry.entries.length,
     );
   }
 
