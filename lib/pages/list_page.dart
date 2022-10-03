@@ -30,8 +30,10 @@ class _ListPageState extends State<ListPage> {
   Widget _showEntries() {
     return ListView.builder(
       itemBuilder: (context, index) {
+        ItemEntry entry = _listEntry.entries[index];
         return ListTile(
-          title: Text(_listEntry.entries[index].name),
+          title: Text(entry.name),
+          subtitle: Text(entry.amount ?? ""),
         );
       },
       itemCount: _listEntry.entries.length,
