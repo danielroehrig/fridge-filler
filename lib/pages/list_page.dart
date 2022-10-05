@@ -32,10 +32,23 @@ class _ListPageState extends State<ListPage> {
       itemBuilder: (context, index) {
         ItemEntry entry = _listEntry.entries[index];
         return Dismissible(
+          background: Container(
+            color: Colors.red,
+            alignment: Alignment.centerRight,
+            child: const Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
+          direction: DismissDirection.endToStart,
+          onDismissed: (dismissDirection) {
+            _listEntry.entries.removeAt(index);
+            _listEntry.save();
+          },
           key: Key(entry.id),
           child: ListTile(
             title: Text(entry.name),
-            subtitle: Text(entry.amount ?? ""),
+            subtitle: Text(entry.id ?? ""),
           ),
         );
       },

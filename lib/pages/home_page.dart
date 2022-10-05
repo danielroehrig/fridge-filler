@@ -74,6 +74,7 @@ class _HomePageState extends State<HomePage> {
         return showDialog<bool>(
             context: context,
             builder: (buildContext) {
+              //TODO use the listEntry directly
               return _deleteConfirmDialog(buildContext, snapshot, index);
             });
       },
@@ -106,6 +107,7 @@ class _HomePageState extends State<HomePage> {
         ),
         TextButton(
           onPressed: () {
+            //TODO deleteList might not be necessary as a simple delete() might suffice
             _databaseProvider!.deleteList(snapshot.data![index].id);
             setState(() {});
             Navigator.pop(buildContext, true);
