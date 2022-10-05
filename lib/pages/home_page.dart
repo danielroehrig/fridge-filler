@@ -74,8 +74,7 @@ class _HomePageState extends State<HomePage> {
         return showDialog<bool>(
             context: context,
             builder: (buildContext) {
-              //TODO use the listEntry directly
-              return _deleteConfirmDialog(buildContext, snapshot, index);
+              return _deleteConfirmDialog(buildContext, listEntry);
             });
       },
       child: ListTile(
@@ -93,8 +92,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  AlertDialog _deleteConfirmDialog(BuildContext buildContext,
-      AsyncSnapshot<List<ListEntry>> snapshot, int index) {
+  AlertDialog _deleteConfirmDialog(BuildContext buildContext, ListEntry list) {
     return AlertDialog(
       title: const Text("Confirm"),
       content: const Text("Do you really want to delete the whole list?"),
@@ -107,8 +105,7 @@ class _HomePageState extends State<HomePage> {
         ),
         TextButton(
           onPressed: () {
-            //TODO deleteList might not be necessary as a simple delete() might suffice
-            _databaseProvider!.deleteList(snapshot.data![index].id);
+            list.delete();
             setState(() {});
             Navigator.pop(buildContext, true);
           },

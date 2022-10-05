@@ -16,12 +16,6 @@ class DatabaseProvider extends InheritedWidget {
     });
   }
 
-  Future<void> deleteList(String listId) {
-    return _box.then((box) {
-      box.delete(listId);
-    });
-  }
-
   Future<List<ListEntry>> getLists() {
     return _box.then((box) {
       return box.values.toList();
