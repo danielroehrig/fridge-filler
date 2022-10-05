@@ -24,6 +24,10 @@ class ItemEntry extends HiveObject {
   String name;
   @HiveField(1)
   String? amount;
+  @HiveField(2)
+  late String id;
 
-  ItemEntry({required this.name, this.amount});
+  ItemEntry({required this.name, this.amount}) {
+    id = UniqueKey().toString();
+  }
 }

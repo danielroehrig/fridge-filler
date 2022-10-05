@@ -31,9 +31,12 @@ class _ListPageState extends State<ListPage> {
     return ListView.builder(
       itemBuilder: (context, index) {
         ItemEntry entry = _listEntry.entries[index];
-        return ListTile(
-          title: Text(entry.name),
-          subtitle: Text(entry.amount ?? ""),
+        return Dismissible(
+          key: Key(entry.id),
+          child: ListTile(
+            title: Text(entry.name),
+            subtitle: Text(entry.amount ?? ""),
+          ),
         );
       },
       itemCount: _listEntry.entries.length,
