@@ -48,6 +48,7 @@ dev_dependencies:
   hive_generator: ^1.1.3
   build_runner: ^2.2.1
   flutter_lints: ^2.0.0
+  icons_launcher: ^2.0.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -90,3 +91,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+icons_launcher:
+  image_path: 'assets/logo.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: false
