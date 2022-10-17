@@ -1,4 +1,4 @@
-package de.danielroehrig.de.multi_shop_list
+package de.danielroehrig.de.fridge_filler
 
 import io.flutter.embedding.android.FlutterActivity
 

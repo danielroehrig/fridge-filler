@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:multi_shop_list/models/list_model.dart';
-import 'package:multi_shop_list/pages/list_page.dart';
-import 'package:multi_shop_list/provider/database_provider.dart';
+import 'package:fridge_filler/models/list_model.dart';
+import 'package:fridge_filler/pages/list_page.dart';
+import 'package:fridge_filler/provider/database_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);

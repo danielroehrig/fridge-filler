@@ -1,4 +1,4 @@
-# multi_shop_list
+# fridge_filler
 
 Mulitple lists for multiple shops
 

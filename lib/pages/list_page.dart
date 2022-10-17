@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:multi_shop_list/models/list_model.dart';
+import 'package:fridge_filler/models/list_model.dart';
 
 class ListPage extends StatefulWidget {
   final ListEntry listEntry;

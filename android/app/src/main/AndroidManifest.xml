@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.danielroehrig.de.multi_shop_list">
+    package="de.danielroehrig.de.fridge_filler">
    <application
         android:label="Fridge Filler"
         android:name="${applicationName}"
