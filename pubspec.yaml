@@ -93,7 +93,7 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 icons_launcher:
-  image_path: 'assets/logo.png'
+  image_path: 'assets/ff_icon.png'
   platforms:
     android:
       enable: true
