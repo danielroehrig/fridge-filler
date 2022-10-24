@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
     _databaseProvider = DatabaseProvider.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Multi Shop List"),
+        title: const Text("Fridge Filler"),
       ),
       floatingActionButton: _addListButton(),
       body: Column(

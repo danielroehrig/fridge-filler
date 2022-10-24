@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/home_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   await Hive.initFlutter('hive_boxes');
@@ -18,7 +18,7 @@ class MultiShopListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Multi Shop List',
+      title: 'Fridge Filler',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
