@@ -19,13 +19,17 @@ jobs:
       - name: Install flutter dependencies
         run: flutter pub get
       - name: Restore playstore.keystore.jks
-        run: echo $KEYSTORE_ddvFILE | base64 -d > /tmp/playstore.keystore.jks
+        id: write_jks_file
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: 'playstore.keystore.jks'
+          encodedString: ${{ secrets.KEYSTORE_FILE }}
       - name: Restore key.properties
         run: |
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
           echo "keyPassword=${{ secrets.KEY_PASSWORD }}" >> android/key.properties
           echo "keyAlias=upload" >> android/key.properties
-          echo "storeFile=/tmp/playstore.keystore.jks" >> android/key.properties
+          echo "storeFile=${{ steps.write_jks_file.outputs.filePath }}" >> android/key.properties
         shell: bash
       - name: Build Android Appbundle
         run: flutter build appbundle
