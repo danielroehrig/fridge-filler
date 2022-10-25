@@ -19,7 +19,7 @@ jobs:
       - name: Install flutter dependencies
         run: flutter pub get
       - name: Restore playstore.keystore.jks
-        run: echo $KEYSTORE_FILE | base64 -d > /tmp/playstore.keystore.jks
+        run: echo $KEYSTORE_ddvFILE | base64 -d > /tmp/playstore.keystore.jks
       - name: Restore key.properties
         run: |
           echo "storePassword=${{ secrets.STORE_PASSWORD }}" >> android/key.properties
