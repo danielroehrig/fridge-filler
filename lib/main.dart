@@ -9,11 +9,11 @@ void main() async {
   //Hive.openLazyBox<ListEntry>('box').then((box) => box.deleteFromDisk());
   Hive.registerAdapter(ListEntryAdapter());
   Hive.registerAdapter(ItemEntryAdapter());
-  runApp(DatabaseProvider(child: const MultiShopListApp()));
+  runApp(DatabaseProvider(child: const FridgeFillerApp()));
 }
 
-class MultiShopListApp extends StatelessWidget {
-  const MultiShopListApp({super.key});
+class FridgeFillerApp extends StatelessWidget {
+  const FridgeFillerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
