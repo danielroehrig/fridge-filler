@@ -32,33 +32,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getLists() {
-    return FutureBuilder<List<ListEntry>>(
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
-        } else if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return const Text('Error');
-          } else if (snapshot.hasData) {
-            return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return _listEntryItem(snapshot, index, context);
-                });
-          } else {
-            return const Text('Empty data');
-          }
-        } else {
-          return Text('State: ${snapshot.connectionState}');
-        }
-      },
-      future: _databaseProvider!.getLists(),
-    );
+    var list = _databaseProvider!.getLists();
+    return ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return _listEntryItem(list[index], index, context);
+        });
   }
 
-  Dismissible _listEntryItem(AsyncSnapshot<List<ListEntry>> snapshot, int index,
-      BuildContext context) {
-    ListEntry listEntry = snapshot.data![index];
+  Dismissible _listEntryItem(
+      ListEntry listEntry, int index, BuildContext context) {
     return Dismissible(
       key: Key(listEntry.id),
       background: Container(

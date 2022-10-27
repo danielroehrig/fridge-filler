@@ -9,7 +9,8 @@ void main() async {
   //Hive.openLazyBox<ListEntry>('box').then((box) => box.deleteFromDisk());
   Hive.registerAdapter(ListEntryAdapter());
   Hive.registerAdapter(ItemEntryAdapter());
-  runApp(DatabaseProvider(child: const FridgeFillerApp()));
+  var box = await Hive.openBox<ListEntry>('box');
+  runApp(DatabaseProvider(box: box, child: const FridgeFillerApp()));
 }
 
 class FridgeFillerApp extends StatelessWidget {
