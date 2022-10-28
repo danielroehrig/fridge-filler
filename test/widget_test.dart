@@ -8,22 +8,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_filler/main.dart';
+import 'package:fridge_filler/models/list_model.dart';
+import 'package:fridge_filler/provider/database_provider.dart';
+import 'package:hive/hive.dart';
+
+class FakeBox<T> extends Fake implements Box<T> {
+  Set<T> initialValues;
+  @override
+  Iterable<T> get values {
+    return initialValues;
+  }
+
+  FakeBox(this.initialValues);
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('Tapping a list opens List', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const FridgeFillerApp());
+    await tester.pumpWidget(DatabaseProvider(
+      box: FakeBox<ListEntry>(
+          {ListEntry(name: "First List"), ListEntry(name: "Second List")}),
+      child: const FridgeFillerApp(),
+    ));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Fridge Filler'), findsOneWidget);
+    expect(find.byIcon(Icons.add), findsOneWidget);
+    expect(find.text("First List"), findsOneWidget);
+    expect(find.text("Second List"), findsOneWidget);
 
     // Tap the '+' icon and trigger a frame.
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
 }
