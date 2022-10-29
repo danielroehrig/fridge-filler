@@ -1,10 +1,3 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fridge_filler/main.dart';
@@ -24,10 +17,12 @@ class FakeBox<T> extends Fake implements Box<T> {
 
 void main() {
   testWidgets('Tapping a list opens List', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+    var firstList = ListEntry(name: "First List");
+    firstList.entries.add(ItemEntry(name: "First item first list"));
+    var secondList = ListEntry(name: "Second List");
+    secondList.entries.add(ItemEntry(name: "First item second list"));
     await tester.pumpWidget(DatabaseProvider(
-      box: FakeBox<ListEntry>(
-          {ListEntry(name: "First List"), ListEntry(name: "Second List")}),
+      box: FakeBox<ListEntry>({firstList, secondList}),
       child: const FridgeFillerApp(),
     ));
 
@@ -35,9 +30,12 @@ void main() {
     expect(find.byIcon(Icons.add), findsOneWidget);
     expect(find.text("First List"), findsOneWidget);
     expect(find.text("Second List"), findsOneWidget);
+    expect(find.text("First item first list"), findsNothing);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.tap(find.text('First List'));
+    await tester.pumpAndSettle();
+    expect(find.text("Second List"), findsNothing);
+    expect(find.text("First List"), findsOneWidget);
+    expect(find.text("First item first list"), findsOneWidget);
   });
 }
