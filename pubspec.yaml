@@ -33,9 +33,12 @@ isar_version: &isar_version 3.0.0 # define the version to be used
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   uuid: 3.0.6
+  intl: ^0.17.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -58,7 +61,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

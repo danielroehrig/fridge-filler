@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/home_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
@@ -20,6 +22,15 @@ class FridgeFillerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fridge Filler',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('de', ''),
+      ],
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

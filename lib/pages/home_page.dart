@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/list_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext buildContext) {
           return AlertDialog(
             icon: const Icon(Icons.list),
-            title: const Text('Add new list'),
+            title: Text(AppLocalizations.of(context)!.addNewList),
             content: TextField(
               onSubmitted: (listName) {
                 if (listName != "") {
