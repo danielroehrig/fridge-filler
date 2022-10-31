@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/list_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
@@ -13,6 +12,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DatabaseProvider? _databaseProvider;
+  final _newListFormKey = GlobalKey<FormState>();
+  final _newListNameController = TextEditingController();
+  final _newListAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     _databaseProvider = DatabaseProvider.of(context);
@@ -113,21 +115,51 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showCreateListDialog() {
-    showDialog(
+    showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext buildContext) {
-          return AlertDialog(
-            icon: const Icon(Icons.list),
-            title: Text(AppLocalizations.of(context)!.addNewList),
-            content: TextField(
-              onSubmitted: (listName) {
-                if (listName != "") {
-                  _databaseProvider!
-                      .addList(listName)
-                      .then((v) => setState(() {}));
-                }
-                Navigator.pop(buildContext);
-              },
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+            child: Form(
+              key: _newListFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Name'),
+                    controller: _newListNameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'A name is needed';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Menge'),
+                    controller: _newListAmountController,
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
+                  ElevatedButton(
+                      child: Text("yup"),
+                      onPressed: () {
+                        if (_newListFormKey.currentState!.validate()) {
+                          _databaseProvider!
+                              .addList(_newListNameController.text)
+                              .then((v) => setState(() {}));
+                        }
+                        Navigator.pop(buildContext);
+                      }),
+                ],
+              ),
             ),
           );
         });
