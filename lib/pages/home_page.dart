@@ -132,6 +132,7 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
+                    autofocus: true,
                     decoration: InputDecoration(labelText: 'Name'),
                     controller: _newListNameController,
                     validator: (value) {
