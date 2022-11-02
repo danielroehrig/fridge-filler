@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   AppLocalizations? _appLocalization;
   final _newListFormKey = GlobalKey<FormState>();
   final _newListNameController = TextEditingController();
-  final _newListAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     _databaseProvider = DatabaseProvider.of(context);
@@ -83,14 +82,14 @@ class _HomePageState extends State<HomePage> {
 
   AlertDialog _deleteConfirmDialog(BuildContext buildContext, ListEntry list) {
     return AlertDialog(
-      title: const Text("Confirm"),
-      content: const Text("Do you really want to delete the whole list?"),
+      title: Text(_appLocalization!.confirm),
+      content: Text(_appLocalization!.confirmDeleteList(list.name)),
       actions: <Widget>[
         TextButton(
           onPressed: () {
             Navigator.pop(buildContext, false);
           },
-          child: const Text("CANCEL"),
+          child: Text(_appLocalization!.cancel),
         ),
         TextButton(
           onPressed: () {
@@ -102,7 +101,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
           ),
-          child: const Text("DELETE"),
+          child: Text(_appLocalization!.delete),
         ),
       ],
     );
@@ -141,16 +140,8 @@ class _HomePageState extends State<HomePage> {
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed';
+                        return 'A name is needed'; //Will never be shown
                       }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    decoration:
-                        InputDecoration(labelText: _appLocalization!.amount),
-                    controller: _newListAmountController,
-                    validator: (value) {
                       return null;
                     },
                   ),
@@ -159,7 +150,7 @@ class _HomePageState extends State<HomePage> {
                       constraints: const BoxConstraints(
                           minWidth: double.infinity, minHeight: 30),
                       child: ElevatedButton(
-                          child: Text(_appLocalization!.done),
+                          child: Text(_appLocalization!.addNewList),
                           onPressed: () {
                             if (_newListFormKey.currentState!.validate()) {
                               _databaseProvider!

@@ -4,7 +4,7 @@
     "name": "Name",
     "amount": "Menge",
     "confirm": "Bestätigen",
-    "confirmDeleteList": "Möchtest du wirklich diese Liste löschen?",
+    "confirmDeleteList": "Möchtest du wirklich die Liste \"{listName}\" löschen?",
     "cancel": "Abbruch",
     "delete": "Löschen"
 }
