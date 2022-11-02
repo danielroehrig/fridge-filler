@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/list_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
@@ -12,12 +13,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DatabaseProvider? _databaseProvider;
+  AppLocalizations? _appLocalization;
   final _newListFormKey = GlobalKey<FormState>();
   final _newListNameController = TextEditingController();
   final _newListAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     _databaseProvider = DatabaseProvider.of(context);
+    _appLocalization = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Fridge Filler"),
@@ -133,7 +136,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   TextFormField(
                     autofocus: true,
-                    decoration: InputDecoration(labelText: 'Name'),
+                    decoration:
+                        InputDecoration(labelText: _appLocalization!.name),
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -143,26 +147,33 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Menge'),
+                    decoration:
+                        InputDecoration(labelText: _appLocalization!.amount),
                     controller: _newListAmountController,
                     validator: (value) {
                       return null;
                     },
                   ),
-                  ElevatedButton(
-                      child: Text("yup"),
-                      onPressed: () {
-                        if (_newListFormKey.currentState!.validate()) {
-                          _databaseProvider!
-                              .addList(_newListNameController.text)
-                              .then((v) => setState(() {}));
-                        }
-                        Navigator.pop(buildContext);
-                      }),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                          minWidth: double.infinity, minHeight: 30),
+                      child: ElevatedButton(
+                          child: Text(_appLocalization!.done),
+                          onPressed: () {
+                            if (_newListFormKey.currentState!.validate()) {
+                              _databaseProvider!
+                                  .addList(_newListNameController.text)
+                                  .then((v) => setState(() {}));
+                            }
+                            Navigator.pop(buildContext);
+                          }),
+                    ),
+                  ),
                 ],
               ),
             ),
           );
-        });
+        }).then((value) => _newListFormKey.currentState!.reset());
   }
 }

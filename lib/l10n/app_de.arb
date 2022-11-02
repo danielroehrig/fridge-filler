@@ -1,3 +1,10 @@
 {
-    "addNewList": "Neue Liste erstellen"
+    "addNewList": "Neue Liste erstellen",
+    "done": "Fertig",
+    "name": "Name",
+    "amount": "Menge",
+    "confirm": "Bestätigen",
+    "confirmDeleteList": "Möchtest du wirklich diese Liste löschen?",
+    "cancel": "Abbruch",
+    "delete": "Löschen"
 }

@@ -2,5 +2,12 @@
     "addNewList": "Add new list",
     "@addNewList": {
       "description": "Title in list creation dialog"
-    }
+    },
+    "done": "Done",
+    "name": "Name",
+    "amount": "Amount",
+    "confirm": "Confirm",
+    "confirmDeleteList": "Do you really want to delete the whole list?",
+    "cancel": "Cancel",
+    "delete": "Delete"
 }
