@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
 
 class ListPage extends StatefulWidget {
   final ListEntry listEntry;
 
-  ListPage({Key? key, required this.listEntry}) : super(key: key);
+  const ListPage({Key? key, required this.listEntry}) : super(key: key);
 
   @override
   State<ListPage> createState() => _ListPageState();
@@ -12,9 +13,14 @@ class ListPage extends StatefulWidget {
 
 class _ListPageState extends State<ListPage> {
   late ListEntry _listEntry;
+  final _newEntryFormKey = GlobalKey<FormState>();
+  late AppLocalizations _appLocalization;
+  final _newEntryNameController = TextEditingController();
+  final _newEntryAmountController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     _listEntry = widget.listEntry;
+    _appLocalization = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(_listEntry.name)),
       body: _showEntries(),
@@ -57,22 +63,70 @@ class _ListPageState extends State<ListPage> {
   }
 
   void _addItem() {
-    showDialog(
+    showModalBottomSheet(
         context: context,
-        builder: (buildContext) {
-          return AlertDialog(
-            icon: const Icon(Icons.add),
-            title: const Text("Add new Item"),
-            content: TextField(
-              onSubmitted: (itemName) {
-                _listEntry.entries.add(ItemEntry(name: itemName));
-                _listEntry.save().then((v) {
-                  setState(() {});
-                  Navigator.pop(buildContext);
-                });
-              },
+        isScrollControlled: true,
+        builder: (BuildContext buildContext) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+            child: Form(
+              key: _newEntryFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    decoration:
+                        InputDecoration(labelText: _appLocalization.name),
+                    controller: _newEntryNameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'A name is needed'; //Will never be shown
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    decoration:
+                        InputDecoration(labelText: _appLocalization.amount),
+                    controller: _newEntryAmountController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'A name is needed'; //Will never be shown
+                      }
+                      return null;
+                    },
+                  ),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                          minWidth: double.infinity, minHeight: 30),
+                      child: ElevatedButton(
+                          child: Text(_appLocalization.addNewList),
+                          onPressed: () {
+                            _listEntry.entries.add(ItemEntry(
+                                name: _newEntryNameController.text,
+                                amount:
+                                    _newEntryAmountController.text.isNotEmpty
+                                        ? _newEntryAmountController.text
+                                        : null));
+                            _listEntry.save().then((v) {
+                              setState(() {});
+                              Navigator.pop(buildContext);
+                            });
+                          }),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
-        });
+        }).then((value) => _newEntryFormKey.currentState!.reset());
   }
 }
