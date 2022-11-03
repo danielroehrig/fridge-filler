@@ -17,5 +17,6 @@
         }
     },
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "addItemToList": "Add item to list"
 }

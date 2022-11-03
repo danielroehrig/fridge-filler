@@ -54,7 +54,7 @@ class _ListPageState extends State<ListPage> {
           key: Key(entry.id),
           child: ListTile(
             title: Text(entry.name),
-            subtitle: Text(entry.id ?? ""),
+            subtitle: Text(entry.amount ?? ""),
           ),
         );
       },
@@ -97,9 +97,6 @@ class _ListPageState extends State<ListPage> {
                         InputDecoration(labelText: _appLocalization.amount),
                     controller: _newEntryAmountController,
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'A name is needed'; //Will never be shown
-                      }
                       return null;
                     },
                   ),
@@ -108,7 +105,7 @@ class _ListPageState extends State<ListPage> {
                       constraints: const BoxConstraints(
                           minWidth: double.infinity, minHeight: 30),
                       child: ElevatedButton(
-                          child: Text(_appLocalization.addNewList),
+                          child: Text(_appLocalization.addItemToList),
                           onPressed: () {
                             _listEntry.entries.add(ItemEntry(
                                 name: _newEntryNameController.text,

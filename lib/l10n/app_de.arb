@@ -6,5 +6,6 @@
     "confirm": "Bestätigen",
     "confirmDeleteList": "Möchtest du wirklich die Liste \"{listName}\" löschen?",
     "cancel": "Abbruch",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "addItemToList": "Zur Liste hinzufügen"
 }
