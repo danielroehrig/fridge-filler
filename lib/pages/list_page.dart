@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
@@ -17,18 +19,44 @@ class _ListPageState extends State<ListPage> {
   late AppLocalizations _appLocalization;
   final _newEntryNameController = TextEditingController();
   final _newEntryAmountController = TextEditingController();
+  late double _deviceWidth, _deviceHeight;
   @override
   Widget build(BuildContext context) {
     _listEntry = widget.listEntry;
     _appLocalization = AppLocalizations.of(context)!;
+    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(title: Text(_listEntry.name)),
-      body: _showEntries(),
+      body: _listEntry.entries.length > 0
+          ? _showEntries()
+          : _showEmptyList(context),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
           _addItem();
         },
+      ),
+    );
+  }
+
+  Center _showEmptyList(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            "Empty list.",
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Icon(
+            Icons.edit_note_outlined,
+            size: min(_deviceWidth, _deviceHeight) * 0.3,
+          ),
+          Text("Add some items!"),
+        ],
       ),
     );
   }
@@ -50,6 +78,7 @@ class _ListPageState extends State<ListPage> {
           onDismissed: (dismissDirection) {
             _listEntry.entries.removeAt(index);
             _listEntry.save();
+            setState(() {});
           },
           key: Key(entry.id),
           child: ListTile(
