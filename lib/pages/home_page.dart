@@ -38,11 +38,15 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getLists() {
     var list = _databaseProvider!.getLists();
-    return ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return _listEntryItem(list[index], index, context);
-        });
+    return ReorderableListView.builder(
+      itemCount: list.length,
+      itemBuilder: (context, index) {
+        return _listEntryItem(list[index], index, context);
+      },
+      onReorder: (int oldIndex, int newIndex) {
+        print("old index $oldIndex new index $newIndex");
+      },
+    );
   }
 
   Dismissible _listEntryItem(
@@ -65,17 +69,22 @@ class _HomePageState extends State<HomePage> {
               return _deleteConfirmDialog(buildContext, listEntry);
             });
       },
-      child: ListTile(
-        title: Text(listEntry.name),
-        onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-                builder: (context) => ListPage(
-                      key: Key(listEntry.id),
-                      listEntry: listEntry,
-                    )),
-          );
-        },
+      child: Card(
+        child: ListTile(
+            title: Text(listEntry.name),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => ListPage(
+                          key: Key(listEntry.id),
+                          listEntry: listEntry,
+                        )),
+              );
+            },
+            trailing: ReorderableDragStartListener(
+              index: index,
+              child: const Icon(Icons.drag_handle),
+            )),
       ),
     );
   }
