@@ -142,6 +142,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _showCreateListDialog() {
+    _newListNameController.clear();
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -190,6 +191,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           );
-        }).then((value) => _newListFormKey.currentState!.reset());
+        }).then((value) {
+      _newListFormKey.currentState!.reset();
+    });
   }
 }
