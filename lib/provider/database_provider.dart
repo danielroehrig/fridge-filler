@@ -13,13 +13,25 @@ class DatabaseProvider extends InheritedWidget {
 
   /// Adds a new list add the bottom of the list of lists
   Future<void> addList(String listName) {
-    ListEntry listEntry = ListEntry(name: listName);
+    ListEntry listEntry = ListEntry(name: listName, position: box.length);
     return box.put(listEntry.id.toString(), listEntry);
   }
 
   /// Gets all lists in the order they were saved
   List<ListEntry> getLists() {
-    return box.values.toList();
+    var list = box.values.toList();
+    list.sort((a, b) {
+      if (a.position == null && b.position == null) {
+        return 0;
+      } else if (a.position == null) {
+        return 1;
+      } else if (b.position == null) {
+        return -1;
+      } else {
+        return a.position!.compareTo(b.position!);
+      }
+    });
+    return list;
   }
 
   @override

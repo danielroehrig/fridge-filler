@@ -9,10 +9,12 @@ class ListEntry extends HiveObject {
   late String id;
   @HiveField(1)
   String name;
+  @HiveField(3)
+  int? position;
   @HiveField(2)
   late List<ItemEntry> entries;
 
-  ListEntry({required this.name}) {
+  ListEntry({required this.name, required this.position}) {
     id = UniqueKey().toString();
     entries = <ItemEntry>[];
   }

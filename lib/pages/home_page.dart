@@ -37,14 +37,28 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _getLists() {
-    var list = _databaseProvider!.getLists();
+    var lists = _databaseProvider!.getLists();
     return ReorderableListView.builder(
-      itemCount: list.length,
+      itemCount: lists.length,
       itemBuilder: (context, index) {
-        return _listEntryItem(list[index], index, context);
+        return _listEntryItem(lists[index], index, context);
       },
-      onReorder: (int oldIndex, int newIndex) {
-        print("old index $oldIndex new index $newIndex");
+      onReorder: (int oldIndex, int newIndex) async {
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+        final ListEntry movedList = lists.removeAt(oldIndex);
+        lists.insert(newIndex, movedList);
+        List<Future<void>> saveFutures = [];
+        for (int i = 0; i < lists.length; i++) {
+          lists[i].position = i;
+          saveFutures.add(lists[i].save());
+        }
+        await Future.wait(saveFutures).then((e) {
+          lists.forEach((element) {
+            print("Name: ${element.name} Position: ${element.position}");
+          });
+        });
       },
     );
   }

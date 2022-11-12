@@ -18,6 +18,7 @@ class ListEntryAdapter extends TypeAdapter<ListEntry> {
     };
     return ListEntry(
       name: fields[1] as String,
+      position: fields[3] as int?,
     )
       ..id = fields[0] as String
       ..entries = (fields[2] as List).cast<ItemEntry>();
@@ -26,11 +27,13 @@ class ListEntryAdapter extends TypeAdapter<ListEntry> {
   @override
   void write(BinaryWriter writer, ListEntry obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
       ..write(obj.name)
+      ..writeByte(3)
+      ..write(obj.position)
       ..writeByte(2)
       ..write(obj.entries);
   }
