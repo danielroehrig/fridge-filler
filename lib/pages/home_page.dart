@@ -49,18 +49,18 @@ class _HomePageState extends State<HomePage> {
         }
         final ListEntry movedList = lists.removeAt(oldIndex);
         lists.insert(newIndex, movedList);
-        List<Future<void>> saveFutures = [];
-        for (int i = 0; i < lists.length; i++) {
-          lists[i].position = i;
-          saveFutures.add(lists[i].save());
-        }
-        await Future.wait(saveFutures).then((e) {
-          lists.forEach((element) {
-            print("Name: ${element.name} Position: ${element.position}");
-          });
-        });
+        await updatePositions(lists);
       },
     );
+  }
+
+  Future<void> updatePositions(List<ListEntry> lists) async {
+    List<Future<void>> saveFutures = [];
+    for (int i = 0; i < lists.length; i++) {
+      lists[i].position = i;
+      saveFutures.add(lists[i].save());
+    }
+    await Future.wait(saveFutures);
   }
 
   Dismissible _listEntryItem(
@@ -115,8 +115,10 @@ class _HomePageState extends State<HomePage> {
           child: Text(_appLocalization!.cancel),
         ),
         TextButton(
-          onPressed: () {
+          onPressed: () async {
             list.delete();
+            var lists = _databaseProvider!.getLists();
+            await updatePositions(lists);
             setState(() {});
             Navigator.pop(buildContext, true);
           },
