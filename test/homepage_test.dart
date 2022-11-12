@@ -17,9 +17,9 @@ class FakeBox<T> extends Fake implements Box<T> {
 
 void main() {
   testWidgets('Tapping a list opens List', (WidgetTester tester) async {
-    var firstList = ListEntry(name: "First List");
+    var firstList = ListEntry(name: "First List", position: 1);
     firstList.entries.add(ItemEntry(name: "First item first list"));
-    var secondList = ListEntry(name: "Second List");
+    var secondList = ListEntry(name: "Second List", position: 0);
     secondList.entries.add(ItemEntry(name: "First item second list"));
     await tester.pumpWidget(DatabaseProvider(
       box: FakeBox<ListEntry>({firstList, secondList}),
