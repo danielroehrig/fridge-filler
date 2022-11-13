@@ -116,20 +116,24 @@ class _HomePageState extends State<HomePage> {
       },
       child: Card(
         child: ListTile(
-            title: Text(listEntry.name),
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                    builder: (context) => ListPage(
-                          key: Key(listEntry.id),
-                          listEntry: listEntry,
-                        )),
-              );
-            },
-            trailing: ReorderableDragStartListener(
-              index: index,
-              child: const Icon(Icons.drag_handle),
-            )),
+          title: Text(listEntry.name),
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder: (context) => ListPage(
+                        key: Key(listEntry.id),
+                        listEntry: listEntry,
+                      )),
+            );
+          },
+          leading: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
+          trailing: Text(
+            listEntry.entries.length.toString(),
+          ),
+        ),
       ),
     );
   }
