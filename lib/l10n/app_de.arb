@@ -7,5 +7,7 @@
     "confirmDeleteList": "Möchtest du wirklich die Liste \"{listName}\" löschen?",
     "cancel": "Abbruch",
     "delete": "Löschen",
-    "addItemToList": "Zur Liste hinzufügen"
+    "addItemToList": "Zur Liste hinzufügen",
+    "emptyList": "Leere Liste",
+    "addLists": "Erstelle eine neue Liste um anzufangen"
 }

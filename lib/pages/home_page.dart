@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
@@ -16,28 +18,57 @@ class _HomePageState extends State<HomePage> {
   AppLocalizations? _appLocalization;
   final _newListFormKey = GlobalKey<FormState>();
   final _newListNameController = TextEditingController();
+  late List<ListEntry> _lists;
+  late double _deviceWidth, _deviceHeight;
   @override
   Widget build(BuildContext context) {
     _databaseProvider = DatabaseProvider.of(context);
     _appLocalization = AppLocalizations.of(context)!;
+    _deviceWidth = MediaQuery.of(context).size.width;
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _lists = _databaseProvider!.getLists();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Fridge Filler"),
       ),
       floatingActionButton: _addListButton(),
-      body: Column(
+      body: _lists.isNotEmpty ? _showList(_lists) : _showEmptyList(context),
+    );
+  }
+
+  Column _showList(List<ListEntry> lists) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Expanded(child: _getLists(lists)),
+      ],
+    );
+  }
+
+  Center _showEmptyList(BuildContext context) {
+    return Center(
+      child: Column(
         mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(child: _getLists()),
+          Text(
+            _appLocalization!.emptyList,
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Icon(
+            Icons.edit_note_outlined,
+            size: min(_deviceWidth, _deviceHeight) * 0.3,
+          ),
+          Text(_appLocalization!.addLists),
         ],
       ),
     );
   }
 
-  Widget _getLists() {
-    var lists = _databaseProvider!.getLists();
+  Widget _getLists(List<ListEntry> lists) {
     return ReorderableListView.builder(
       itemCount: lists.length,
       itemBuilder: (context, index) {

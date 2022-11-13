@@ -18,5 +18,7 @@
     },
     "cancel": "Cancel",
     "delete": "Delete",
-    "addItemToList": "Add item to list"
+    "addItemToList": "Add item to list",
+    "emptyList": "Empty list",
+    "addLists": "Create a new list to start"
 }
