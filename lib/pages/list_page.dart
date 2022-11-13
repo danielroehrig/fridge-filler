@@ -62,7 +62,8 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget _showEntries() {
-    return ListView.builder(
+    return ReorderableListView.builder(
+      onReorder: (int oldIndex, int newIndex) {},
       itemBuilder: (context, index) {
         ItemEntry entry = _listEntry.entries[index];
         return Dismissible(
