@@ -81,9 +81,11 @@ class _ListPageState extends State<ListPage> {
             setState(() {});
           },
           key: Key(entry.id),
-          child: ListTile(
-            title: Text(entry.name),
-            subtitle: Text(entry.amount ?? ""),
+          child: Card(
+            child: ListTile(
+              title: Text(entry.name),
+              subtitle: entry.amount != null ? Text(entry.amount!) : null,
+            ),
           ),
         );
       },
