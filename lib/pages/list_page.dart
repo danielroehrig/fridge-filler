@@ -48,7 +48,7 @@ class _ListPageState extends State<ListPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Empty list.",
+            _appLocalization.emptyList,
             style: Theme.of(context).textTheme.headline3,
           ),
           Icon(

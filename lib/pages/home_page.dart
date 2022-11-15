@@ -118,13 +118,15 @@ class _HomePageState extends State<HomePage> {
         child: ListTile(
           title: Text(listEntry.name),
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                  builder: (context) => ListPage(
-                        key: Key(listEntry.id),
-                        listEntry: listEntry,
-                      )),
-            );
+            Navigator.of(context)
+                .push(
+                  MaterialPageRoute(
+                      builder: (context) => ListPage(
+                            key: Key(listEntry.id),
+                            listEntry: listEntry,
+                          )),
+                )
+                .then((_) => setState(() {}));
           },
           leading: ReorderableDragStartListener(
             index: index,
