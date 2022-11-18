@@ -9,5 +9,6 @@
     "delete": "Löschen",
     "addItemToList": "Zur Liste hinzufügen",
     "emptyList": "Leere Liste",
-    "addLists": "Erstelle eine neue Liste um anzufangen"
+    "addLists": "Erstelle eine neue Liste um anzufangen",
+    "saveChanges": "Änderungen speichern"
 }

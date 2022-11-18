@@ -20,5 +20,6 @@
     "delete": "Delete",
     "addItemToList": "Add item to list",
     "emptyList": "Empty list",
-    "addLists": "Create a new list to start"
+    "addLists": "Create a new list to start",
+    "saveChanges": "Save changes"
 }

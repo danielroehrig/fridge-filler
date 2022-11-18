@@ -106,6 +106,7 @@ class _ListPageState extends State<ListPage> {
             child: const Icon(Icons.drag_handle),
           ),
           trailing: entry.amount != null ? Text(entry.amount!) : null,
+          onLongPress: () => _editItem(index),
         ),
       ),
     );
@@ -162,6 +163,73 @@ class _ListPageState extends State<ListPage> {
                                     _newEntryAmountController.text.isNotEmpty
                                         ? _newEntryAmountController.text
                                         : null));
+                            _listEntry.save().then((v) {
+                              setState(() {});
+                              Navigator.pop(buildContext);
+                            });
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).then((value) => _newEntryFormKey.currentState!.reset());
+  }
+
+  void _editItem(int index) {
+    var item = _listEntry.entries.elementAt(index);
+    _newEntryNameController.text = item.name;
+    _newEntryAmountController.text = item.amount ?? "";
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext buildContext) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+            child: Form(
+              key: _newEntryFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    decoration:
+                        InputDecoration(labelText: _appLocalization.name),
+                    controller: _newEntryNameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'A name is needed'; //Will never be shown
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    autofocus: true,
+                    decoration:
+                        InputDecoration(labelText: _appLocalization.amount),
+                    controller: _newEntryAmountController,
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                          minWidth: double.infinity, minHeight: 30),
+                      child: ElevatedButton(
+                          child: Text(_appLocalization.saveChanges),
+                          onPressed: () {
+                            item.name = _newEntryNameController.text;
+                            item.amount =
+                                _newEntryAmountController.text.isNotEmpty
+                                    ? _newEntryAmountController.text
+                                    : null;
                             _listEntry.save().then((v) {
                               setState(() {});
                               Navigator.pop(buildContext);
