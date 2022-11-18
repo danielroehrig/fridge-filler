@@ -6,6 +6,8 @@ import 'package:fridge_filler/models/list_model.dart';
 import 'package:fridge_filler/pages/list_page.dart';
 import 'package:fridge_filler/provider/database_provider.dart';
 
+import '../models/reorderable.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -83,15 +85,6 @@ class _HomePageState extends State<HomePage> {
         await updatePositions(lists);
       },
     );
-  }
-
-  Future<void> updatePositions(List<ListEntry> lists) async {
-    List<Future<void>> saveFutures = [];
-    for (int i = 0; i < lists.length; i++) {
-      lists[i].position = i;
-      saveFutures.add(lists[i].save());
-    }
-    await Future.wait(saveFutures);
   }
 
   Dismissible _listEntryItem(

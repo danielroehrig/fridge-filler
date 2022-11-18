@@ -9,8 +9,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 void main() async {
   await Hive.initFlutter('hive_boxes');
   //Hive.openLazyBox<ListEntry>('box').then((box) => box.deleteFromDisk());
-  Hive.registerAdapter(ListEntryAdapter());
   Hive.registerAdapter(ItemEntryAdapter());
+  Hive.registerAdapter(ListEntryAdapter());
   var box = await Hive.openBox<ListEntry>('box');
   runApp(DatabaseProvider(box: box, child: const FridgeFillerApp()));
 }

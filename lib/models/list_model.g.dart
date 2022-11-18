@@ -62,19 +62,23 @@ class ItemEntryAdapter extends TypeAdapter<ItemEntry> {
     return ItemEntry(
       name: fields[0] as String,
       amount: fields[1] as String?,
-    )..id = fields[2] as String;
+    )
+      ..id = fields[2] as String
+      ..position = fields[3] as int?;
   }
 
   @override
   void write(BinaryWriter writer, ItemEntry obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.amount)
       ..writeByte(2)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(3)
+      ..write(obj.position);
   }
 
   @override

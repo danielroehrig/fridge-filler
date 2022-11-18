@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:fridge_filler/models/list_model.dart';
+import 'package:fridge_filler/models/reorderable.dart';
 
 class ListPage extends StatefulWidget {
   final ListEntry listEntry;
@@ -63,34 +64,46 @@ class _ListPageState extends State<ListPage> {
 
   Widget _showEntries() {
     return ReorderableListView.builder(
-      onReorder: (int oldIndex, int newIndex) {},
       itemBuilder: (context, index) {
         ItemEntry entry = _listEntry.entries[index];
-        return Dismissible(
-          background: Container(
-            color: Colors.red,
-            alignment: Alignment.centerRight,
-            child: const Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-          ),
-          direction: DismissDirection.endToStart,
-          onDismissed: (dismissDirection) {
-            _listEntry.entries.removeAt(index);
-            _listEntry.save();
-            setState(() {});
-          },
-          key: Key(entry.id),
-          child: Card(
-            child: ListTile(
-              title: Text(entry.name),
-              subtitle: entry.amount != null ? Text(entry.amount!) : null,
-            ),
-          ),
-        );
+        return _listItem(index, entry);
+      },
+      onReorder: (int oldIndex, int newIndex) async {
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+        final ItemEntry movedList = _listEntry.entries.removeAt(oldIndex);
+        _listEntry.entries.insert(newIndex, movedList);
+        await updatePositions(_listEntry.entries);
+        _listEntry.save();
       },
       itemCount: _listEntry.entries.length,
+    );
+  }
+
+  Dismissible _listItem(int index, ItemEntry entry) {
+    return Dismissible(
+      background: Container(
+        color: Colors.red,
+        alignment: Alignment.centerRight,
+        child: const Icon(
+          Icons.delete,
+          color: Colors.white,
+        ),
+      ),
+      direction: DismissDirection.endToStart,
+      onDismissed: (dismissDirection) {
+        _listEntry.entries.removeAt(index);
+        _listEntry.save();
+        setState(() {});
+      },
+      key: Key(entry.id),
+      child: Card(
+        child: ListTile(
+          title: Text(entry.name),
+          subtitle: entry.amount != null ? Text(entry.amount!) : null,
+        ),
+      ),
     );
   }
 
