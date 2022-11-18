@@ -101,7 +101,11 @@ class _ListPageState extends State<ListPage> {
       child: Card(
         child: ListTile(
           title: Text(entry.name),
-          subtitle: entry.amount != null ? Text(entry.amount!) : null,
+          leading: ReorderableDragStartListener(
+            index: index,
+            child: const Icon(Icons.drag_handle),
+          ),
+          trailing: entry.amount != null ? Text(entry.amount!) : null,
         ),
       ),
     );
