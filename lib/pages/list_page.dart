@@ -113,6 +113,8 @@ class _ListPageState extends State<ListPage> {
   }
 
   void _addItem() {
+    _newEntryNameController.clear();
+    _newEntryAmountController.clear();
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -179,6 +181,8 @@ class _ListPageState extends State<ListPage> {
 
   void _editItem(int index) {
     var item = _listEntry.entries.elementAt(index);
+    _newEntryNameController.clear();
+    _newEntryAmountController.clear();
     _newEntryNameController.text = item.name;
     _newEntryAmountController.text = item.amount ?? "";
     showModalBottomSheet(

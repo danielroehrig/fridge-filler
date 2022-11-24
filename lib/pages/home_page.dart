@@ -107,27 +107,31 @@ class _HomePageState extends State<HomePage> {
               return _deleteConfirmDialog(buildContext, listEntry);
             });
       },
-      child: Card(
-        child: ListTile(
-          title: Text(listEntry.name),
-          onTap: () {
-            Navigator.of(context)
-                .push(
-                  MaterialPageRoute(
-                      builder: (context) => ListPage(
-                            key: Key(listEntry.id),
-                            listEntry: listEntry,
-                          )),
-                )
-                .then((_) => setState(() {}));
-          },
-          leading: ReorderableDragStartListener(
-            index: index,
-            child: const Icon(Icons.drag_handle),
-          ),
-          trailing: Text(
-            listEntry.entries.length.toString(),
-          ),
+      child: _listCard(listEntry, index),
+    );
+  }
+
+  Card _listCard(ListEntry listEntry, int index) {
+    return Card(
+      child: ListTile(
+        title: Text(listEntry.name),
+        onTap: () {
+          Navigator.of(context)
+              .push(
+                MaterialPageRoute(
+                    builder: (context) => ListPage(
+                          key: Key(listEntry.id),
+                          listEntry: listEntry,
+                        )),
+              )
+              .then((_) => setState(() {}));
+        },
+        leading: ReorderableDragStartListener(
+          index: index,
+          child: const Icon(Icons.drag_handle),
+        ),
+        trailing: Text(
+          listEntry.entries.length.toString(),
         ),
       ),
     );
