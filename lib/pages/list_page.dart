@@ -179,6 +179,18 @@ class _ListPageState extends State<ListPage> {
         }).then((value) => _newEntryFormKey.currentState!.reset());
   }
 
+  void _validateAndSubmit(buildContext) {
+    _listEntry.entries.add(ItemEntry(
+        name: _newEntryNameController.text,
+        amount: _newEntryAmountController.text.isNotEmpty
+            ? _newEntryAmountController.text
+            : null));
+    _listEntry.save().then((v) {
+      setState(() {});
+      Navigator.pop(buildContext);
+    });
+  }
+
   void _editItem(int index) {
     var item = _listEntry.entries.elementAt(index);
     _newEntryNameController.clear();

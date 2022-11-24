@@ -205,6 +205,9 @@ class _HomePageState extends State<HomePage> {
                       }
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndAdd(buildContext);
+                    },
                   ),
                   Center(
                     child: ConstrainedBox(
@@ -213,12 +216,7 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                           child: Text(_appLocalization.addNewList),
                           onPressed: () {
-                            if (_newListFormKey.currentState!.validate()) {
-                              _databaseProvider!
-                                  .addList(_newListNameController.text)
-                                  .then((v) => setState(() {}));
-                            }
-                            Navigator.pop(buildContext);
+                            _validateAndAdd(buildContext);
                           }),
                     ),
                   ),
@@ -229,6 +227,15 @@ class _HomePageState extends State<HomePage> {
         }).then((value) {
       _newListFormKey.currentState!.reset();
     });
+  }
+
+  void _validateAndAdd(buildContext) {
+    if (_newListFormKey.currentState!.validate()) {
+      _databaseProvider!
+          .addList(_newListNameController.text)
+          .then((v) => setState(() {}));
+    }
+    Navigator.pop(buildContext);
   }
 
   void _editItem(int index) {
@@ -262,6 +269,9 @@ class _HomePageState extends State<HomePage> {
                       }
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndEdit(buildContext, item);
+                    },
                   ),
                   Center(
                     child: ConstrainedBox(
@@ -270,11 +280,7 @@ class _HomePageState extends State<HomePage> {
                       child: ElevatedButton(
                           child: Text(_appLocalization.saveChanges),
                           onPressed: () {
-                            item.name = _newListNameController.text;
-                            item.save().then((v) {
-                              setState(() {});
-                              Navigator.pop(buildContext);
-                            });
+                            _validateAndEdit(buildContext, item);
                           }),
                     ),
                   ),
@@ -283,5 +289,13 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }).then((value) => _newListFormKey.currentState!.reset());
+  }
+
+  void _validateAndEdit(BuildContext buildContext, ListEntry item) {
+    item.name = _newListNameController.text;
+    item.save().then((v) {
+      setState(() {});
+      Navigator.pop(buildContext);
+    });
   }
 }
