@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DatabaseProvider? _databaseProvider;
-  AppLocalizations? _appLocalization;
+  late AppLocalizations _appLocalization;
   final _newListFormKey = GlobalKey<FormState>();
   final _newListNameController = TextEditingController();
   late List<ListEntry> _lists;
@@ -57,14 +57,14 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            _appLocalization!.emptyList,
+            _appLocalization.emptyList,
             style: Theme.of(context).textTheme.headline3,
           ),
           Icon(
             Icons.edit_note_outlined,
             size: min(_deviceWidth, _deviceHeight) * 0.3,
           ),
-          Text(_appLocalization!.addLists),
+          Text(_appLocalization.addLists),
         ],
       ),
     );
@@ -133,20 +133,21 @@ class _HomePageState extends State<HomePage> {
         trailing: Text(
           listEntry.entries.length.toString(),
         ),
+        onLongPress: () => _editItem(index),
       ),
     );
   }
 
   AlertDialog _deleteConfirmDialog(BuildContext buildContext, ListEntry list) {
     return AlertDialog(
-      title: Text(_appLocalization!.confirm),
-      content: Text(_appLocalization!.confirmDeleteList(list.name)),
+      title: Text(_appLocalization.confirm),
+      content: Text(_appLocalization.confirmDeleteList(list.name)),
       actions: <Widget>[
         TextButton(
           onPressed: () {
             Navigator.pop(buildContext, false);
           },
-          child: Text(_appLocalization!.cancel),
+          child: Text(_appLocalization.cancel),
         ),
         TextButton(
           onPressed: () async {
@@ -160,7 +161,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
           ),
-          child: Text(_appLocalization!.delete),
+          child: Text(_appLocalization.delete),
         ),
       ],
     );
@@ -196,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     autofocus: true,
                     decoration:
-                        InputDecoration(labelText: _appLocalization!.name),
+                        InputDecoration(labelText: _appLocalization.name),
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -210,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                       constraints: const BoxConstraints(
                           minWidth: double.infinity, minHeight: 30),
                       child: ElevatedButton(
-                          child: Text(_appLocalization!.addNewList),
+                          child: Text(_appLocalization.addNewList),
                           onPressed: () {
                             if (_newListFormKey.currentState!.validate()) {
                               _databaseProvider!
@@ -228,5 +229,59 @@ class _HomePageState extends State<HomePage> {
         }).then((value) {
       _newListFormKey.currentState!.reset();
     });
+  }
+
+  void _editItem(int index) {
+    var item = _lists.elementAt(index);
+    _newListNameController.clear();
+    _newListNameController.text = item.name;
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext buildContext) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: 15,
+                left: 15,
+                right: 15,
+                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+            child: Form(
+              key: _newListFormKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextFormField(
+                    autofocus: true,
+                    decoration:
+                        InputDecoration(labelText: _appLocalization.name),
+                    controller: _newListNameController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'A name is needed'; //Will never be shown
+                      }
+                      return null;
+                    },
+                  ),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                          minWidth: double.infinity, minHeight: 30),
+                      child: ElevatedButton(
+                          child: Text(_appLocalization.saveChanges),
+                          onPressed: () {
+                            item.name = _newListNameController.text;
+                            item.save().then((v) {
+                              setState(() {});
+                              Navigator.pop(buildContext);
+                            });
+                          }),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).then((value) => _newListFormKey.currentState!.reset());
   }
 }
