@@ -269,6 +269,7 @@ class _HomePageState extends State<HomePage> {
                       }
                       return null;
                     },
+                    textInputAction: TextInputAction.done,
                     onFieldSubmitted: (_) {
                       _validateAndEdit(buildContext, item);
                     },
