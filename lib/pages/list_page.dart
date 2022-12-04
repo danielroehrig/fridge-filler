@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -100,12 +101,36 @@ class _ListPageState extends State<ListPage> {
       key: Key(entry.id),
       child: Card(
         child: ListTile(
-          title: Text(entry.name),
+          onTap: () {
+            entry.done = !entry.done;
+            _listEntry.save();
+            setState(() {});
+          },
+          title: Text(
+            entry.name,
+            style: entry.done
+                ? const TextStyle(
+                    decoration: TextDecoration.lineThrough,
+                    color: Colors.grey,
+                  )
+                : null,
+          ),
           leading: ReorderableDragStartListener(
             index: index,
-            child: const Icon(Icons.drag_handle),
+            child:
+                Icon(Icons.drag_handle, color: entry.done ? Colors.grey : null),
           ),
-          trailing: entry.amount != null ? Text(entry.amount!) : null,
+          trailing: entry.amount != null
+              ? Text(
+                  entry.amount!,
+                  style: entry.done
+                      ? const TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Colors.grey,
+                        )
+                      : null,
+                )
+              : null,
           onLongPress: () => _editItem(index),
         ),
       ),

@@ -14,6 +14,8 @@ class ListEntry extends HiveObject implements Reorderable {
   int? position;
   @HiveField(2)
   late List<ItemEntry> entries;
+  @HiveField(4)
+  String? description;
 
   ListEntry({required this.name, required this.position}) {
     id = UniqueKey().toString();
@@ -41,6 +43,10 @@ class ItemEntry extends HiveObject implements Reorderable {
   late String id;
   @HiveField(3)
   int? position;
+  @HiveField(4)
+  String? description;
+  @HiveField(5, defaultValue: false)
+  late bool done;
 
   ItemEntry({required this.name, this.amount}) {
     id = UniqueKey().toString();

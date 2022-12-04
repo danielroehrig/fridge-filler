@@ -21,13 +21,14 @@ class ListEntryAdapter extends TypeAdapter<ListEntry> {
       position: fields[3] as int?,
     )
       ..id = fields[0] as String
-      ..entries = (fields[2] as List).cast<ItemEntry>();
+      ..entries = (fields[2] as List).cast<ItemEntry>()
+      ..description = fields[4] as String?;
   }
 
   @override
   void write(BinaryWriter writer, ListEntry obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ListEntryAdapter extends TypeAdapter<ListEntry> {
       ..writeByte(3)
       ..write(obj.position)
       ..writeByte(2)
-      ..write(obj.entries);
+      ..write(obj.entries)
+      ..writeByte(4)
+      ..write(obj.description);
   }
 
   @override
@@ -64,13 +67,15 @@ class ItemEntryAdapter extends TypeAdapter<ItemEntry> {
       amount: fields[1] as String?,
     )
       ..id = fields[2] as String
-      ..position = fields[3] as int?;
+      ..position = fields[3] as int?
+      ..description = fields[4] as String?
+      ..done = fields[5] == null ? false : fields[5] as bool;
   }
 
   @override
   void write(BinaryWriter writer, ItemEntry obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -78,7 +83,11 @@ class ItemEntryAdapter extends TypeAdapter<ItemEntry> {
       ..writeByte(2)
       ..write(obj.id)
       ..writeByte(3)
-      ..write(obj.position);
+      ..write(obj.position)
+      ..writeByte(4)
+      ..write(obj.description)
+      ..writeByte(5)
+      ..write(obj.done);
   }
 
   @override
