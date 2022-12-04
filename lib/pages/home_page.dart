@@ -115,6 +115,8 @@ class _HomePageState extends State<HomePage> {
     return Card(
       child: ListTile(
         title: Text(listEntry.name),
+        subtitle:
+            listEntry.description != null ? Text(listEntry.description!) : null,
         onTap: () {
           Navigator.of(context)
               .push(
