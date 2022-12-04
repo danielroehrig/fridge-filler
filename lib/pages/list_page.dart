@@ -29,7 +29,20 @@ class _ListPageState extends State<ListPage> {
     _deviceWidth = MediaQuery.of(context).size.width;
     _deviceHeight = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text(_listEntry.name)),
+      appBar: AppBar(
+        title: Text(_listEntry.name),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _listEntry.entries.removeWhere((item) => item.done);
+              _listEntry.save();
+              setState(() {});
+            },
+            icon: const Icon(Icons.clear_all),
+            tooltip: 'Delete completed items',
+          ),
+        ],
+      ),
       body: _listEntry.entries.length > 0
           ? _showEntries()
           : _showEmptyList(context),
@@ -186,12 +199,15 @@ class _ListPageState extends State<ListPage> {
                       child: ElevatedButton(
                           child: Text(_appLocalization.addItemToList),
                           onPressed: () {
-                            _listEntry.entries.add(ItemEntry(
-                                name: _newEntryNameController.text,
-                                amount:
-                                    _newEntryAmountController.text.isNotEmpty
-                                        ? _newEntryAmountController.text
-                                        : null));
+                            _listEntry.entries.add(
+                              ItemEntry(
+                                  name: _newEntryNameController.text,
+                                  amount:
+                                      _newEntryAmountController.text.isNotEmpty
+                                          ? _newEntryAmountController.text
+                                          : null,
+                                  done: false),
+                            );
                             _listEntry.save().then((v) {
                               setState(() {});
                               Navigator.pop(buildContext);
@@ -204,18 +220,6 @@ class _ListPageState extends State<ListPage> {
             ),
           );
         }).then((value) => _newEntryFormKey.currentState!.reset());
-  }
-
-  void _validateAndSubmit(buildContext) {
-    _listEntry.entries.add(ItemEntry(
-        name: _newEntryNameController.text,
-        amount: _newEntryAmountController.text.isNotEmpty
-            ? _newEntryAmountController.text
-            : null));
-    _listEntry.save().then((v) {
-      setState(() {});
-      Navigator.pop(buildContext);
-    });
   }
 
   void _editItem(int index) {

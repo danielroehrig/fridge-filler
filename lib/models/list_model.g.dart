@@ -65,11 +65,11 @@ class ItemEntryAdapter extends TypeAdapter<ItemEntry> {
     return ItemEntry(
       name: fields[0] as String,
       amount: fields[1] as String?,
+      done: fields[5] == null ? false : fields[5] as bool,
     )
       ..id = fields[2] as String
       ..position = fields[3] as int?
-      ..description = fields[4] as String?
-      ..done = fields[5] == null ? false : fields[5] as bool;
+      ..description = fields[4] as String?;
   }
 
   @override

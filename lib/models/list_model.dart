@@ -48,7 +48,7 @@ class ItemEntry extends HiveObject implements Reorderable {
   @HiveField(5, defaultValue: false)
   late bool done;
 
-  ItemEntry({required this.name, this.amount}) {
+  ItemEntry({required this.name, this.amount, required this.done}) {
     id = UniqueKey().toString();
   }
   @override
