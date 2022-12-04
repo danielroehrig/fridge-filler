@@ -196,6 +196,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.name),
                     controller: _newListNameController,
@@ -260,6 +261,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.name),
                     controller: _newListNameController,

@@ -133,6 +133,7 @@ class _ListPageState extends State<ListPage> {
                 children: [
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.name),
                     controller: _newEntryNameController,
@@ -145,6 +146,7 @@ class _ListPageState extends State<ListPage> {
                   ),
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.amount),
                     controller: _newEntryAmountController,
@@ -215,6 +217,7 @@ class _ListPageState extends State<ListPage> {
                 children: [
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.name),
                     controller: _newEntryNameController,
@@ -227,6 +230,7 @@ class _ListPageState extends State<ListPage> {
                   ),
                   TextFormField(
                     autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
                     decoration:
                         InputDecoration(labelText: _appLocalization.amount),
                     controller: _newEntryAmountController,
