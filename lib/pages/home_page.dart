@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   late AppLocalizations _appLocalization;
   final _newListFormKey = GlobalKey<FormState>();
   final _newListNameController = TextEditingController();
+  final _newListDescriptionController = TextEditingController();
   late List<ListEntry> _lists;
   late double _deviceWidth, _deviceHeight;
   @override
@@ -180,6 +181,7 @@ class _HomePageState extends State<HomePage> {
 
   void _showCreateListDialog() {
     _newListNameController.clear();
+    _newListDescriptionController.clear();
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -212,6 +214,15 @@ class _HomePageState extends State<HomePage> {
                       _validateAndAdd(buildContext);
                     },
                   ),
+                  TextFormField(
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(labelText: "Description"),
+                    controller: _newListDescriptionController,
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
                   Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(
@@ -235,7 +246,11 @@ class _HomePageState extends State<HomePage> {
   void _validateAndAdd(buildContext) {
     if (_newListFormKey.currentState!.validate()) {
       _databaseProvider!
-          .addList(_newListNameController.text)
+          .addList(
+              _newListNameController.text,
+              _newListDescriptionController.text.isNotEmpty
+                  ? _newListDescriptionController.text
+                  : null)
           .then((v) => setState(() {}));
     }
     Navigator.pop(buildContext);
@@ -244,7 +259,9 @@ class _HomePageState extends State<HomePage> {
   void _editItem(int index) {
     var item = _lists.elementAt(index);
     _newListNameController.clear();
+    _newListDescriptionController.clear();
     _newListNameController.text = item.name;
+    _newListDescriptionController.text = item.description ?? "";
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -278,6 +295,15 @@ class _HomePageState extends State<HomePage> {
                       _validateAndEdit(buildContext, item);
                     },
                   ),
+                  TextFormField(
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration(labelText: "Description"),
+                    controller: _newListDescriptionController,
+                    validator: (value) {
+                      return null;
+                    },
+                  ),
                   Center(
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(
@@ -298,6 +324,9 @@ class _HomePageState extends State<HomePage> {
 
   void _validateAndEdit(BuildContext buildContext, ListEntry item) {
     item.name = _newListNameController.text;
+    item.description = _newListDescriptionController.text.isNotEmpty
+        ? _newListDescriptionController.text
+        : null;
     item.save().then((v) {
       setState(() {});
       Navigator.pop(buildContext);

@@ -12,8 +12,9 @@ class DatabaseProvider extends InheritedWidget {
       context.dependOnInheritedWidgetOfExactType<DatabaseProvider>();
 
   /// Adds a new list add the bottom of the list of lists
-  Future<void> addList(String listName) {
-    ListEntry listEntry = ListEntry(name: listName, position: box.length);
+  Future<void> addList(String listName, String? description) {
+    ListEntry listEntry = ListEntry(
+        name: listName, position: box.length, description: description);
     return box.put(listEntry.id.toString(), listEntry);
   }
 

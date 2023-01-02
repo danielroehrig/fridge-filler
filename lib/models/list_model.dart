@@ -17,7 +17,7 @@ class ListEntry extends HiveObject implements Reorderable {
   @HiveField(4)
   String? description;
 
-  ListEntry({required this.name, required this.position}) {
+  ListEntry({required this.name, required this.position, this.description}) {
     id = UniqueKey().toString();
     entries = <ItemEntry>[];
   }
