@@ -21,5 +21,8 @@
     "addItemToList": "Add item to list",
     "emptyList": "Empty list",
     "addLists": "Create a new list to start",
-    "saveChanges": "Save changes"
+    "saveChanges": "Save changes",
+    "description": "Description",
+    "errorNameNotGiven": "A name must be given",
+    "addSomeItems": "Add some items!"
 }

@@ -206,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed'; //Will never be shown
+                        return _appLocalization.errorNameNotGiven; //Will never be shown
                       }
                       return null;
                     },
@@ -217,7 +217,7 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     autofocus: true,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: "Description"),
+                    decoration: InputDecoration(labelText: _appLocalization.description),
                     controller: _newListDescriptionController,
                     validator: (value) {
                       return null;
@@ -289,7 +289,7 @@ class _HomePageState extends State<HomePage> {
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed'; //Will never be shown
+                        return _appLocalization.errorNameNotGiven; //Will never be shown
                       }
                       return null;
                     },
@@ -301,7 +301,7 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     autofocus: true,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: "Description"),
+                    decoration: InputDecoration(labelText: _appLocalization.description),
                     controller: _newListDescriptionController,
                     validator: (value) {
                       return null;

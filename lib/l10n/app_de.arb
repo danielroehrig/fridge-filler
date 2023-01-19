@@ -10,5 +10,8 @@
     "addItemToList": "Zur Liste hinzufügen",
     "emptyList": "Leere Liste",
     "addLists": "Erstelle eine neue Liste um anzufangen",
-    "saveChanges": "Änderungen speichern"
+    "saveChanges": "Änderungen speichern",
+    "description": "Beschreibung",
+    "errorNameNotGiven": "Ein Name muss angegeben sein",
+    "addSomeItems": "Füge einen Artikel hinzu!"
 }

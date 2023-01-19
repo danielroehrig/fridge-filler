@@ -70,7 +70,7 @@ class _ListPageState extends State<ListPage> {
             Icons.edit_note_outlined,
             size: min(_deviceWidth, _deviceHeight) * 0.3,
           ),
-          Text("Add some items!"),
+          Text(_appLocalization.addSomeItems),
         ],
       ),
     );
@@ -177,7 +177,7 @@ class _ListPageState extends State<ListPage> {
                     controller: _newEntryNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed'; //Will never be shown
+                        return _appLocalization.errorNameNotGiven;
                       }
                       return null;
                     },
@@ -246,7 +246,7 @@ class _ListPageState extends State<ListPage> {
                     controller: _newEntryNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed';
+                        return _appLocalization.errorNameNotGiven;
                       }
                       return null;
                     },
