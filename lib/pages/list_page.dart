@@ -181,6 +181,9 @@ class _ListPageState extends State<ListPage> {
                       }
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndAdd(buildContext);
+                    },
                   ),
                   TextFormField(
                     autofocus: true,
@@ -191,6 +194,9 @@ class _ListPageState extends State<ListPage> {
                     validator: (value) {
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndAdd(buildContext);
+                    },
                   ),
                   Center(
                     child: ConstrainedBox(
@@ -199,19 +205,7 @@ class _ListPageState extends State<ListPage> {
                       child: ElevatedButton(
                           child: Text(_appLocalization.addItemToList),
                           onPressed: () {
-                            _listEntry.entries.add(
-                              ItemEntry(
-                                  name: _newEntryNameController.text,
-                                  amount:
-                                      _newEntryAmountController.text.isNotEmpty
-                                          ? _newEntryAmountController.text
-                                          : null,
-                                  done: false),
-                            );
-                            _listEntry.save().then((v) {
-                              setState(() {});
-                              Navigator.pop(buildContext);
-                            });
+                            _validateAndAdd(buildContext);
                           }),
                     ),
                   ),
@@ -252,7 +246,7 @@ class _ListPageState extends State<ListPage> {
                     controller: _newEntryNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'A name is needed'; //Will never be shown
+                        return 'A name is needed';
                       }
                       return null;
                     },
@@ -274,15 +268,7 @@ class _ListPageState extends State<ListPage> {
                       child: ElevatedButton(
                           child: Text(_appLocalization.saveChanges),
                           onPressed: () {
-                            item.name = _newEntryNameController.text;
-                            item.amount =
-                                _newEntryAmountController.text.isNotEmpty
-                                    ? _newEntryAmountController.text
-                                    : null;
-                            _listEntry.save().then((v) {
-                              setState(() {});
-                              Navigator.pop(buildContext);
-                            });
+                            _validateAndEdit(buildContext, item);
                           }),
                     ),
                   ),
@@ -291,5 +277,36 @@ class _ListPageState extends State<ListPage> {
             ),
           );
         }).then((value) => _newEntryFormKey.currentState!.reset());
+  }
+
+  void _validateAndAdd(buildContext) {
+    if (_newEntryFormKey.currentState!.validate()) {
+      _listEntry.entries.add(
+        ItemEntry(
+            name: _newEntryNameController.text,
+            amount: _newEntryAmountController.text.isNotEmpty
+                ? _newEntryAmountController.text
+                : null,
+            done: false),
+      );
+      _listEntry.save().then((v) {
+        setState(() {});
+      });
+    }
+    Navigator.pop(buildContext);
+  }
+
+  void _validateAndEdit(buildContext, ItemEntry item){
+    if (_newEntryFormKey.currentState!.validate()) {
+      item.name = _newEntryNameController.text;
+      item.amount =
+      _newEntryAmountController.text.isNotEmpty
+          ? _newEntryAmountController.text
+          : null;
+      _listEntry.save().then((v) {
+        setState(() {});
+        Navigator.pop(buildContext);
+      });
+    }
   }
 }

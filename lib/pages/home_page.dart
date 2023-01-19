@@ -222,6 +222,9 @@ class _HomePageState extends State<HomePage> {
                     validator: (value) {
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndAdd(buildContext);
+                    },
                   ),
                   Center(
                     child: ConstrainedBox(
@@ -303,6 +306,9 @@ class _HomePageState extends State<HomePage> {
                     validator: (value) {
                       return null;
                     },
+                    onFieldSubmitted: (_) {
+                      _validateAndAdd(buildContext);
+                    },
                   ),
                   Center(
                     child: ConstrainedBox(
@@ -323,13 +329,15 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _validateAndEdit(BuildContext buildContext, ListEntry item) {
-    item.name = _newListNameController.text;
-    item.description = _newListDescriptionController.text.isNotEmpty
-        ? _newListDescriptionController.text
-        : null;
-    item.save().then((v) {
-      setState(() {});
-      Navigator.pop(buildContext);
-    });
+    if (_newListFormKey.currentState!.validate()) {
+      item.name = _newListNameController.text;
+      item.description = _newListDescriptionController.text.isNotEmpty
+          ? _newListDescriptionController.text
+          : null;
+      item.save().then((v) {
+        setState(() {});
+        Navigator.pop(buildContext);
+      });
+    }
   }
 }
