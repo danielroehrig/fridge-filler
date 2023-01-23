@@ -38,7 +38,7 @@ class _ListPageState extends State<ListPage> {
               _listEntry.save();
               setState(() {});
             },
-            icon: const Icon(Icons.clear_all),
+            icon: const Icon(Icons.delete_sweep),
             tooltip: 'Delete completed items',
           ),
         ],
