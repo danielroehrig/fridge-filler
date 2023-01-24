@@ -179,11 +179,15 @@ class _ListPageState extends State<ListPage> {
                       if (value == null || value.isEmpty) {
                         return _appLocalization.errorNameNotGiven;
                       }
+                      if (_listEntry.entries.any((item) => item.name.toLowerCase() == value.toLowerCase())){
+                        return _appLocalization.errorDuplicateEntry;
+                      }
                       return null;
                     },
                     onFieldSubmitted: (_) {
                       _validateAndAdd(buildContext);
                     },
+                    onChanged: (_) => _newEntryFormKey.currentState!.validate(),
                   ),
                   TextFormField(
                     autofocus: true,
@@ -244,9 +248,13 @@ class _ListPageState extends State<ListPage> {
                     decoration:
                         InputDecoration(labelText: _appLocalization.name),
                     controller: _newEntryNameController,
+                    onChanged: (_) => _newEntryFormKey.currentState!.validate(),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return _appLocalization.errorNameNotGiven;
+                      }
+                      if (_listEntry.entries.any((item) => item.name.toLowerCase() == value.toLowerCase())){
+                        return _appLocalization.errorDuplicateEntry;
                       }
                       return null;
                     },

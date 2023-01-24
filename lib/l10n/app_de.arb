@@ -13,5 +13,6 @@
     "saveChanges": "Änderungen speichern",
     "description": "Beschreibung",
     "errorNameNotGiven": "Ein Name muss angegeben sein",
+    "errorDuplicateEntry": "Artikel bereits auf der Liste",
     "addSomeItems": "Füge einen Artikel hinzu!"
 }

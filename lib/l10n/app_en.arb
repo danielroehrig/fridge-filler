@@ -24,5 +24,6 @@
     "saveChanges": "Save changes",
     "description": "Description",
     "errorNameNotGiven": "A name must be given",
+    "errorDuplicateEntry": "Item already on that list",
     "addSomeItems": "Add some items!"
 }
