@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   final _newListDescriptionController = TextEditingController();
   late List<ListEntry> _lists;
   late double _deviceWidth, _deviceHeight;
+
   @override
   Widget build(BuildContext context) {
     _databaseProvider = DatabaseProvider.of(context);
@@ -118,17 +119,7 @@ class _HomePageState extends State<HomePage> {
         title: Text(listEntry.name),
         subtitle:
             listEntry.description != null ? Text(listEntry.description!) : null,
-        onTap: () {
-          Navigator.of(context)
-              .push(
-                MaterialPageRoute(
-                    builder: (context) => ListPage(
-                          key: Key(listEntry.id),
-                          listEntry: listEntry,
-                        )),
-              )
-              .then((_) => setState(() {}));
-        },
+        onTap: () => _loadList(listEntry),
         leading: ReorderableDragStartListener(
           index: index,
           child: const Icon(Icons.drag_handle),
@@ -139,6 +130,22 @@ class _HomePageState extends State<HomePage> {
         onLongPress: () => _editItem(index),
       ),
     );
+  }
+
+  void _loadList(ListEntry listEntry) {
+    _databaseProvider?.setLastList(listEntry.id);
+    Navigator.of(context)
+        .push(
+      MaterialPageRoute(
+          builder: (context) => ListPage(
+                key: Key(listEntry.id),
+                listEntry: listEntry,
+              )),
+    )
+        .then((_) {
+      _databaseProvider?.resetLastList();
+      setState(() {});
+    });
   }
 
   AlertDialog _deleteConfirmDialog(BuildContext buildContext, ListEntry list) {
@@ -206,7 +213,8 @@ class _HomePageState extends State<HomePage> {
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return _appLocalization.errorNameNotGiven; //Will never be shown
+                        return _appLocalization
+                            .errorNameNotGiven; //Will never be shown
                       }
                       return null;
                     },
@@ -217,7 +225,8 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     autofocus: true,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: _appLocalization.description),
+                    decoration: InputDecoration(
+                        labelText: _appLocalization.description),
                     controller: _newListDescriptionController,
                     validator: (value) {
                       return null;
@@ -289,7 +298,8 @@ class _HomePageState extends State<HomePage> {
                     controller: _newListNameController,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return _appLocalization.errorNameNotGiven; //Will never be shown
+                        return _appLocalization
+                            .errorNameNotGiven; //Will never be shown
                       }
                       return null;
                     },
@@ -301,7 +311,8 @@ class _HomePageState extends State<HomePage> {
                   TextFormField(
                     autofocus: true,
                     textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(labelText: _appLocalization.description),
+                    decoration: InputDecoration(
+                        labelText: _appLocalization.description),
                     controller: _newListDescriptionController,
                     validator: (value) {
                       return null;
@@ -339,5 +350,16 @@ class _HomePageState extends State<HomePage> {
         Navigator.pop(buildContext);
       });
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ListEntry? lastList = _databaseProvider?.getLastList();
+      if (null != lastList) {
+        _loadList(lastList);
+      }
+    });
   }
 }
