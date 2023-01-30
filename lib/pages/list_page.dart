@@ -178,7 +178,7 @@ class _ListPageState extends State<ListPage> {
                       if (value == null || value.isEmpty) {
                         return _appLocalization.errorNameNotGiven;
                       }
-                      if (_listEntry.entries.any((item) => item.name.toLowerCase() == value.toLowerCase())){
+                      if (_entryAlreadyExists(value)) {
                         return _appLocalization.errorDuplicateEntry;
                       }
                       return null;
@@ -219,6 +219,11 @@ class _ListPageState extends State<ListPage> {
         }).then((value) => _newEntryFormKey.currentState!.reset());
   }
 
+  bool _entryAlreadyExists(String value) {
+    return _listEntry.entries.any(
+        (item) => item.name.toLowerCase().trim() == value.toLowerCase().trim());
+  }
+
   void _editItem(int index) {
     var item = _listEntry.entries.elementAt(index);
     _newEntryNameController.clear();
@@ -252,7 +257,7 @@ class _ListPageState extends State<ListPage> {
                       if (value == null || value.isEmpty) {
                         return _appLocalization.errorNameNotGiven;
                       }
-                      if (_listEntry.entries.any((item) => item.name.toLowerCase() == value.toLowerCase())){
+                      if (_entryAlreadyExists(value)) {
                         return _appLocalization.errorDuplicateEntry;
                       }
                       return null;
@@ -303,11 +308,10 @@ class _ListPageState extends State<ListPage> {
     Navigator.pop(buildContext);
   }
 
-  void _validateAndEdit(buildContext, ItemEntry item){
+  void _validateAndEdit(buildContext, ItemEntry item) {
     if (_newEntryFormKey.currentState!.validate()) {
       item.name = _newEntryNameController.text;
-      item.amount =
-      _newEntryAmountController.text.isNotEmpty
+      item.amount = _newEntryAmountController.text.isNotEmpty
           ? _newEntryAmountController.text
           : null;
       _listEntry.save().then((v) {
