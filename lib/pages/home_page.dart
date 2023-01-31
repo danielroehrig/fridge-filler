@@ -193,60 +193,62 @@ class _HomePageState extends State<HomePage> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext buildContext) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
-            child: Form(
-              key: _newListFormKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.name),
-                    controller: _newListNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return _appLocalization
-                            .errorNameNotGiven; //Will never be shown
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      _validateAndAdd(buildContext);
-                    },
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                        labelText: _appLocalization.description),
-                    controller: _newListDescriptionController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      _validateAndAdd(buildContext);
-                    },
-                  ),
-                  Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          minWidth: double.infinity, minHeight: 30),
-                      child: ElevatedButton(
-                          child: Text(_appLocalization.addNewList),
-                          onPressed: () {
-                            _validateAndAdd(buildContext);
-                          }),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  right: 15,
+                  bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+              child: Form(
+                key: _newListFormKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.name),
+                      controller: _newListNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return _appLocalization
+                              .errorNameNotGiven; //Will never be shown
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _validateAndAdd(buildContext);
+                      },
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                          labelText: _appLocalization.description),
+                      controller: _newListDescriptionController,
+                      validator: (value) {
+                        return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _validateAndAdd(buildContext);
+                      },
+                    ),
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            minWidth: double.infinity, minHeight: 30),
+                        child: ElevatedButton(
+                            child: Text(_appLocalization.addNewList),
+                            onPressed: () {
+                              _validateAndAdd(buildContext);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -278,61 +280,63 @@ class _HomePageState extends State<HomePage> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext buildContext) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
-            child: Form(
-              key: _newListFormKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.name),
-                    controller: _newListNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return _appLocalization
-                            .errorNameNotGiven; //Will never be shown
-                      }
-                      return null;
-                    },
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (_) {
-                      _validateAndEdit(buildContext, item);
-                    },
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration: InputDecoration(
-                        labelText: _appLocalization.description),
-                    controller: _newListDescriptionController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      _validateAndAdd(buildContext);
-                    },
-                  ),
-                  Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          minWidth: double.infinity, minHeight: 30),
-                      child: ElevatedButton(
-                          child: Text(_appLocalization.saveChanges),
-                          onPressed: () {
-                            _validateAndEdit(buildContext, item);
-                          }),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  right: 15,
+                  bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+              child: Form(
+                key: _newListFormKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.name),
+                      controller: _newListNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return _appLocalization
+                              .errorNameNotGiven; //Will never be shown
+                        }
+                        return null;
+                      },
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (_) {
+                        _validateAndEdit(buildContext, item);
+                      },
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                          labelText: _appLocalization.description),
+                      controller: _newListDescriptionController,
+                      validator: (value) {
+                        return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _validateAndAdd(buildContext);
+                      },
+                    ),
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            minWidth: double.infinity, minHeight: 30),
+                        child: ElevatedButton(
+                            child: Text(_appLocalization.saveChanges),
+                            onPressed: () {
+                              _validateAndEdit(buildContext, item);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

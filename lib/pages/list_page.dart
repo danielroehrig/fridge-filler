@@ -156,63 +156,66 @@ class _ListPageState extends State<ListPage> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext buildContext) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
-            child: Form(
-              key: _newEntryFormKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.name),
-                    controller: _newEntryNameController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return _appLocalization.errorNameNotGiven;
-                      }
-                      if (_entryAlreadyExists(value)) {
-                        return _appLocalization.errorDuplicateEntry;
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      _validateAndAdd(buildContext);
-                    },
-                    onChanged: (_) => _newEntryFormKey.currentState!.validate(),
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.amount),
-                    controller: _newEntryAmountController,
-                    validator: (value) {
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      _validateAndAdd(buildContext);
-                    },
-                  ),
-                  Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          minWidth: double.infinity, minHeight: 30),
-                      child: ElevatedButton(
-                          child: Text(_appLocalization.addItemToList),
-                          onPressed: () {
-                            _validateAndAdd(buildContext);
-                          }),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  right: 15,
+                  bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+              child: Form(
+                key: _newEntryFormKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.name),
+                      controller: _newEntryNameController,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return _appLocalization.errorNameNotGiven;
+                        }
+                        if (_entryAlreadyExists(value)) {
+                          return _appLocalization.errorDuplicateEntry;
+                        }
+                        return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _validateAndAdd(buildContext);
+                      },
+                      onChanged: (_) =>
+                          _newEntryFormKey.currentState!.validate(),
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.amount),
+                      controller: _newEntryAmountController,
+                      validator: (value) {
+                        return null;
+                      },
+                      onFieldSubmitted: (_) {
+                        _validateAndAdd(buildContext);
+                      },
+                    ),
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            minWidth: double.infinity, minHeight: 30),
+                        child: ElevatedButton(
+                            child: Text(_appLocalization.addItemToList),
+                            onPressed: () {
+                              _validateAndAdd(buildContext);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -234,57 +237,60 @@ class _ListPageState extends State<ListPage> {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext buildContext) {
-          return Padding(
-            padding: EdgeInsets.only(
-                top: 15,
-                left: 15,
-                right: 15,
-                bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
-            child: Form(
-              key: _newEntryFormKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.name),
-                    controller: _newEntryNameController,
-                    onChanged: (_) => _newEntryFormKey.currentState!.validate(),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return _appLocalization.errorNameNotGiven;
-                      }
-                      if (_entryAlreadyExists(value)) {
-                        return _appLocalization.errorDuplicateEntry;
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    autofocus: true,
-                    textCapitalization: TextCapitalization.sentences,
-                    decoration:
-                        InputDecoration(labelText: _appLocalization.amount),
-                    controller: _newEntryAmountController,
-                    validator: (value) {
-                      return null;
-                    },
-                  ),
-                  Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                          minWidth: double.infinity, minHeight: 30),
-                      child: ElevatedButton(
-                          child: Text(_appLocalization.saveChanges),
-                          onPressed: () {
-                            _validateAndEdit(buildContext, item);
-                          }),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  top: 15,
+                  left: 15,
+                  right: 15,
+                  bottom: MediaQuery.of(buildContext).viewInsets.bottom + 15),
+              child: Form(
+                key: _newEntryFormKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.name),
+                      controller: _newEntryNameController,
+                      onChanged: (_) =>
+                          _newEntryFormKey.currentState!.validate(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return _appLocalization.errorNameNotGiven;
+                        }
+                        if (_entryAlreadyExists(value)) {
+                          return _appLocalization.errorDuplicateEntry;
+                        }
+                        return null;
+                      },
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      autofocus: true,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration:
+                          InputDecoration(labelText: _appLocalization.amount),
+                      controller: _newEntryAmountController,
+                      validator: (value) {
+                        return null;
+                      },
+                    ),
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(
+                            minWidth: double.infinity, minHeight: 30),
+                        child: ElevatedButton(
+                            child: Text(_appLocalization.saveChanges),
+                            onPressed: () {
+                              _validateAndEdit(buildContext, item);
+                            }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
